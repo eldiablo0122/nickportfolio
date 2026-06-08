@@ -225,8 +225,8 @@ function App() {
               <h1>Helping Businesses Run Smoother Through Customer Support, Operations, and Executive Assistance</h1>
               <p>I help growing businesses stay organized, support their customers, manage operations, and streamline daily workflows so owners can focus on growth.</p>
               <div className="hero-actions">
-                <a className="primary-btn" href="#contact">Schedule a Call <ArrowRight size={18} /></a>
-                <a className="secondary-btn" href="#experience">View Experience <ChevronRight size={18} /></a>
+                <a className="primary-btn" href="https://calendly.com/YOUR-USERNAME/discovery-call" target="_blank" rel="noreferrer"> Schedule a Call <ArrowRight size={18} /></a>
+                <a className="secondary-btn" href="#experience">View Experience <ChevronRight size={18} />  </a>
               </div>
             </motion.div>
             <DashboardMockup />
@@ -327,7 +327,8 @@ function App() {
               <a href="https://www.linkedin.com/in/nicole-abella-74b245408/"><BriefcaseBusiness size={18} /> LinkedIn</a>
             </div>
           </div>
-          <form className="contact-form" aria-label="Contact form">
+       <form className="contact-form" aria-label="Contact form" action="https://formspree.io/f/xxxxxxx" method="POST">
+
             <label>Name<input type="text" name="name" autoComplete="name" placeholder="Your name" /></label>
             <label>Email<input type="email" name="email" autoComplete="email" placeholder="you@company.com" /></label>
             <label>Role Needed<select name="role"><option>Customer Support</option><option>Executive Assistance</option><option>E-Commerce Operations</option><option>Administrative Support</option></select></label>
