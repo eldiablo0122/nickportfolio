@@ -204,7 +204,7 @@ function DashboardMockup() {
 
 function App() {
   return (
-    <div className="site">
+    <div className="site"> 
       <header className="nav">
         <a className="brand" href="#top" aria-label="Nicole Abella home">
           <span>NA</span>
@@ -323,7 +323,7 @@ function App() {
             <p>Available for Customer Support, Executive Assistance, and E-Commerce Operations Roles.</p>
             <div className="contact-links">
               <a href="mailto:nicksupport04@gmail.com"><Mail size={18} /> nicksupport04@gmail.com</a>
-              <a href="https://wa.me/+639660754082"><MessageCircle size={18} /> WhatsApp</a>
+              <a href="https://api.whatsapp.com/send?phone=639660754082"><MessageCircle size={18} /> WhatsApp</a>
               <a href="https://www.linkedin.com/in/nicole-abella-74b245408/"><BriefcaseBusiness size={18} /> LinkedIn</a>
             </div>
           </div>
