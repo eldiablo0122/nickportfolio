@@ -27,6 +27,7 @@ const navItems = [
   ['About', 'about'],
   ['Services', 'services'],
   ['Experience', 'experience'],
+  ['Work', 'work'],
   ['Skills', 'skills'],
   ['Contact', 'contact'],
 ];
@@ -96,6 +97,65 @@ const skills = [
 ];
 
 const tools = ['Shopify', 'Google Workspace', 'Excel', 'Word', 'Gmail', 'ChatGPT', 'Google Sheets', 'Canva', 'Zoom', 'Slack'];
+const projectCases = [
+  {
+    title: 'Calendar Management',
+    category: 'Executive Assistance',
+    summary: 'Before-and-after calendar organization work for clearer scheduling, fewer conflicts, and better daily visibility.',
+    images: [
+      { label: 'Before', src: 'assets/projects/calendar-management/before.png' },
+      { label: 'After', src: 'assets/projects/calendar-management/after.png' },
+    ],
+  },
+  {
+    title: 'Email Management',
+    category: 'Administrative Support',
+    summary: 'Inbox cleanup and organization examples showing improved structure, prioritization, and follow-up readiness.',
+    images: [
+      { label: 'Before', src: 'assets/projects/email-management/before-1.png' },
+      { label: 'Before', src: 'assets/projects/email-management/before-2.png' },
+      { label: 'After', src: 'assets/projects/email-management/after.png' },
+    ],
+  },
+  {
+    title: 'Customer Service',
+    category: 'Customer Support',
+    summary: 'Customer communication samples focused on clear responses, issue handling, and support consistency.',
+    images: [
+      { label: 'Sample', src: 'assets/projects/customer-service/support-1.png' },
+      { label: 'Sample', src: 'assets/projects/customer-service/support-2.png' },
+      { label: 'Sample', src: 'assets/projects/customer-service/support-3.png' },
+      { label: 'Sample', src: 'assets/projects/customer-service/support-4.png' },
+    ],
+  },
+  {
+    title: 'Meeting Scheduling',
+    category: 'Executive Assistance',
+    summary: 'Scheduling examples showing meeting coordination, appointment handling, and organized communication.',
+    images: [
+      { label: 'Sample', src: 'assets/projects/meeting-scheduling/schedule-1.png' },
+      { label: 'Sample', src: 'assets/projects/meeting-scheduling/schedule-2.png' },
+    ],
+  },
+  {
+    title: 'Meta Inbox & Social Support',
+    category: 'Social Media Management',
+    summary: 'Before-and-after social inbox work for cleaner message handling and improved customer communication.',
+    images: [
+      { label: 'Before', src: 'assets/projects/meta/before.png' },
+      { label: 'After', src: 'assets/projects/meta/after.png' },
+    ],
+  },
+  {
+    title: 'Website Creation Samples',
+    category: 'Digital Operations',
+    summary: 'Website-related project samples showing visual organization, presentation, and support for online business operations.',
+    images: [
+      { label: 'Blackline Automotive', src: 'assets/projects/website-creation/blackline-automotive.png' },
+      { label: 'Vitanic', src: 'assets/projects/website-creation/vitanic.png' },
+    ],
+  },
+];
 const differentiators = [
   {
     trait: 'Proactive Communication',
@@ -148,6 +208,29 @@ function SectionHeader({ eyebrow, title, text }) {
       <h2>{title}</h2>
       {text && <p className="section-copy">{text}</p>}
     </motion.div>
+  );
+}
+
+function ProfilePhoto() {
+  return (
+    <div className="profile-photo-card">
+      <div className="profile-photo-frame">
+        <img
+          src="assets/profile/nicole-abella.jpg"
+          alt="Nicole Abella"
+          onError={(event) => {
+            event.currentTarget.style.display = 'none';
+            event.currentTarget.nextElementSibling.style.display = 'grid';
+          }}
+        />
+        <div className="profile-photo-fallback">NA</div>
+      </div>
+      <div>
+        <p>Profile Photo Slot</p>
+        <strong>To add your photo, save it as:</strong>
+        <span>public/assets/profile/nicole-abella.jpg</span>
+      </div>
+    </div>
   );
 }
 
@@ -235,6 +318,7 @@ function App() {
 
         <section className="section about" id="about">
           <SectionHeader eyebrow="About Nicole" title="Executive-level support for growing teams." text="A highly organized Virtual Assistant and Customer Support Specialist with over 3 years of experience supporting e-commerce brands and business owners. Experienced in customer support, Shopify operations, order fulfillment, supplier coordination, administrative assistance, social media management, and process improvement." />
+          <ProfilePhoto />
           <div className="stat-grid">
             {stats.map(([number, label]) => (
               <motion.div className="stat-card" key={label} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.5 }}>
@@ -268,6 +352,29 @@ function App() {
                   <p>{job.company}</p>
                   <h3>{job.role}</h3>
                   <div className="task-list">{job.tasks.map((task) => <span key={task}>{task}</span>)}</div>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section work-section" id="work">
+          <SectionHeader eyebrow="Selected Work" title="Practical examples of support, organization, and operations work." text="These samples can be edited, renamed, or replaced as you label more work examples from your project folders." />
+          <div className="work-grid">
+            {projectCases.map((project) => (
+              <motion.article className="work-card" key={project.title} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.5 }}>
+                <div className="work-card-head">
+                  <span>{project.category}</span>
+                  <h3>{project.title}</h3>
+                  <p>{project.summary}</p>
+                </div>
+                <div className="work-images">
+                  {project.images.map((image) => (
+                    <figure key={`${project.title}-${image.src}`}>
+                      <img src={image.src} alt={`${project.title} ${image.label}`} loading="lazy" />
+                      <figcaption>{image.label}</figcaption>
+                    </figure>
+                  ))}
                 </div>
               </motion.article>
             ))}
