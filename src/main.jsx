@@ -14,12 +14,16 @@ import {
   MessageCircle,
   Moon,
   PackageCheck,
+  Percent,
+  RotateCcw,
   Send,
   ShieldCheck,
+  ShoppingCart,
   Sparkles,
   Star,
   Store,
   Sun,
+  Truck,
   Users,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -99,6 +103,28 @@ const skills = [
 ];
 
 const tools = ['Shopify', 'Google Workspace', 'Excel', 'Word', 'Gmail', 'ChatGPT', 'Google Sheets', 'Canva', 'Zoom', 'Slack'];
+const shopifyMonths = [
+  { month: 'January', period: 'Before', orders: 250, refunds: 32, refundRate: 12.8, reshipments: 22, csat: 78 },
+  { month: 'February (1-14)', period: 'Before', orders: 280, refunds: 28, refundRate: 10.0, reshipments: 19, csat: 82 },
+  { month: 'February (15-28)', period: 'After', orders: 320, refunds: 16, refundRate: 5.0, reshipments: 11, csat: 90 },
+  { month: 'March', period: 'After', orders: 410, refunds: 14, refundRate: 3.4, reshipments: 9, csat: 92 },
+  { month: 'April', period: 'After', orders: 465, refunds: 12, refundRate: 2.6, reshipments: 8, csat: 93 },
+  { month: 'May', period: 'After', orders: 520, refunds: 11, refundRate: 2.1, reshipments: 7, csat: 94 },
+  { month: 'June', period: 'After', orders: 575, refunds: 10, refundRate: 1.7, reshipments: 6, csat: 94 },
+  { month: 'July', period: 'After', orders: 635, refunds: 9, refundRate: 1.4, reshipments: 6, csat: 95 },
+  { month: 'August', period: 'After', orders: 695, refunds: 8, refundRate: 1.2, reshipments: 5, csat: 95 },
+  { month: 'September', period: 'After', orders: 760, refunds: 7, refundRate: 0.9, reshipments: 4, csat: 96 },
+  { month: 'October', period: 'After', orders: 830, refunds: 6, refundRate: 0.8, reshipments: 4, csat: 96 },
+  { month: 'November', period: 'After', orders: 910, refunds: 6, refundRate: 0.7, reshipments: 3, csat: 97 },
+  { month: 'December', period: 'After', orders: 1020, refunds: 5, refundRate: 0.5, reshipments: 3, csat: 98 },
+];
+const shopifyMetrics = [
+  { key: 'orders', label: 'Orders Handled', icon: ShoppingCart, suffix: '', good: 'up' },
+  { key: 'refunds', label: 'Refunds', icon: RotateCcw, suffix: '', good: 'down' },
+  { key: 'refundRate', label: 'Refund Rate', icon: Percent, suffix: '%', good: 'down' },
+  { key: 'reshipments', label: 'Reshipments', icon: Truck, suffix: '', good: 'down' },
+  { key: 'csat', label: 'CSAT', icon: Star, suffix: '%', good: 'up' },
+];
 const featuredProject = {
   title: 'Pixie.cam',
   category: 'Featured Web Creation + Automation System',
@@ -253,6 +279,149 @@ function ProfilePhoto() {
         <strong>Shopify VA | Customer Support Specialist | E-Commerce Operations & Order Fulfillment</strong>
       </div>
     </div>
+  );
+}
+
+function ShopifyDashboard() {
+  const [activeMetric, setActiveMetric] = useState('orders');
+  const [selectedMonth, setSelectedMonth] = useState(shopifyMonths.length - 1);
+  const activeConfig = shopifyMetrics.find((metric) => metric.key === activeMetric);
+  const selected = shopifyMonths[selectedMonth];
+  const beforeStart = shopifyMonths[0];
+  const afterStart = shopifyMonths[2];
+  const finalMonth = shopifyMonths[shopifyMonths.length - 1];
+  const values = shopifyMonths.map((item) => item[activeMetric]);
+  const maxValue = Math.max(...values);
+  const minValue = Math.min(...values);
+  const range = Math.max(maxValue - minValue, 1);
+  const points = values
+    .map((value, index) => {
+      const x = (index / (values.length - 1)) * 100;
+      const y = 92 - ((value - minValue) / range) * 74;
+      return `${x},${y}`;
+    })
+    .join(' ');
+  const orderIncrease = Math.round(((finalMonth.orders - beforeStart.orders) / beforeStart.orders) * 100);
+  const refundImprovement = Math.round(((beforeStart.refundRate - finalMonth.refundRate) / beforeStart.refundRate) * 100);
+  const csatGain = finalMonth.csat - beforeStart.csat;
+  const Icon = activeConfig.icon;
+
+  return (
+    <motion.article className="shopify-dashboard" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.5 }}>
+      <div className="shopify-dashboard-head">
+        <div>
+          <p className="eyebrow">Customer Service Priority</p>
+          <h3>Shopify Support & Operations Performance Dashboard</h3>
+          <span>Interactive view of support impact after employment in mid February 2025.</span>
+        </div>
+        <div className="shopify-impact">
+          <strong>{orderIncrease}%</strong>
+          <span>orders handled growth</span>
+        </div>
+      </div>
+
+      <div className="shopify-kpis">
+        <div><strong>{finalMonth.orders.toLocaleString()}</strong><span>December orders handled</span></div>
+        <div><strong>{refundImprovement}%</strong><span>refund-rate improvement</span></div>
+        <div><strong>{csatGain} pts</strong><span>CSAT improvement</span></div>
+        <div><strong>{finalMonth.reshipments}</strong><span>December reshipments</span></div>
+      </div>
+
+      <div className="shopify-dashboard-grid">
+        <div className="shopify-panel chart-panel">
+          <div className="metric-tabs" role="tablist" aria-label="Shopify dashboard metric">
+            {shopifyMetrics.map((metric) => {
+              const MetricIcon = metric.icon;
+              return (
+                <button
+                  type="button"
+                  key={metric.key}
+                  className={activeMetric === metric.key ? 'active' : ''}
+                  onClick={() => setActiveMetric(metric.key)}
+                  aria-pressed={activeMetric === metric.key}
+                >
+                  <MetricIcon size={16} />
+                  {metric.label}
+                </button>
+              );
+            })}
+          </div>
+          <div className="chart-header">
+            <div>
+              <span>{activeConfig.label}</span>
+              <strong>{selected[activeMetric].toLocaleString()}{activeConfig.suffix}</strong>
+            </div>
+            <p>{selected.month} · {selected.period === 'After' ? 'Since employment' : 'Before employment'}</p>
+          </div>
+          <div className="line-chart" aria-label={`${activeConfig.label} over time`}>
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+              <polyline points={points} />
+              {values.map((value, index) => {
+                const x = (index / (values.length - 1)) * 100;
+                const y = 92 - ((value - minValue) / range) * 74;
+                return <circle key={`${activeMetric}-${index}`} cx={x} cy={y} r={index === selectedMonth ? 2.7 : 1.6} />;
+              })}
+            </svg>
+            <div className="employment-marker">Employed mid Feb 2025</div>
+          </div>
+          <div className="month-picker">
+            {shopifyMonths.map((item, index) => (
+              <button
+                type="button"
+                key={item.month}
+                className={index === selectedMonth ? 'active' : ''}
+                onClick={() => setSelectedMonth(index)}
+              >
+                {item.month.replace('February ', 'Feb ')}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="shopify-panel selected-month-panel">
+          <div className="selected-month-icon"><Icon size={24} /></div>
+          <p>Selected Month</p>
+          <h4>{selected.month}</h4>
+          <div className="selected-metrics">
+            <span><strong>{selected.orders.toLocaleString()}</strong> Orders</span>
+            <span><strong>{selected.refunds}</strong> Refunds</span>
+            <span><strong>{selected.refundRate}%</strong> Refund Rate</span>
+            <span><strong>{selected.csat}%</strong> CSAT</span>
+          </div>
+          <div className="shopify-proof-note">
+            <Check size={18} />
+            Proactive support, issue resolution, order management, and process improvement helped move the account from reactive support to measurable operational stability.
+          </div>
+        </div>
+      </div>
+
+      <div className="shopify-table-wrap">
+        <table className="shopify-table">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Orders</th>
+              <th>Refunds</th>
+              <th>Refund Rate</th>
+              <th>Reshipments</th>
+              <th>CSAT</th>
+            </tr>
+          </thead>
+          <tbody>
+            {shopifyMonths.map((row, index) => (
+              <tr key={row.month} className={index === selectedMonth ? 'active' : ''} onClick={() => setSelectedMonth(index)}>
+                <td>{row.month}</td>
+                <td>{row.orders.toLocaleString()}</td>
+                <td>{row.refunds}</td>
+                <td>{row.refundRate}%</td>
+                <td>{row.reshipments}</td>
+                <td>{row.csat}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </motion.article>
   );
 }
 
@@ -413,6 +582,7 @@ function App() {
 
         <section className="section work-section" id="work">
           <SectionHeader eyebrow="Selected Work" title="Practical examples of support, organization, and operations work." text="These samples can be edited, renamed, or replaced as you label more work examples from your project folders." />
+          <ShopifyDashboard />
           <motion.article className="featured-work-card" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.5 }}>
             <div className="featured-work-media">
               <img src={featuredProject.image} alt={`${featuredProject.title} website preview`} loading="lazy" />
