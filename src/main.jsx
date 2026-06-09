@@ -581,7 +581,7 @@ function App() {
         </section>
 
         <section className="section work-section" id="work">
-          <SectionHeader eyebrow="Selected Work" title="Practical examples of support, organization, and operations work." text="These samples can be edited, renamed, or replaced as you label more work examples from your project folders." />
+          <SectionHeader eyebrow="Selected Work" title="Practical examples of support, organization, and operations work." text="These are the projects I've worked on over the years." />
           <ShopifyDashboard />
           <motion.article className="featured-work-card" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.5 }}>
             <div className="featured-work-media">
