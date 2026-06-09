@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   ArrowRight,
@@ -12,12 +12,14 @@ import {
   LineChart,
   Mail,
   MessageCircle,
+  Moon,
   PackageCheck,
   Send,
   ShieldCheck,
   Sparkles,
   Star,
   Store,
+  Sun,
   Users,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -97,6 +99,27 @@ const skills = [
 ];
 
 const tools = ['Shopify', 'Google Workspace', 'Excel', 'Word', 'Gmail', 'ChatGPT', 'Google Sheets', 'Canva', 'Zoom', 'Slack'];
+const featuredProject = {
+  title: 'Pixie.cam',
+  category: 'Featured Web Creation + Automation System',
+  summary: 'A camera rental website built with booking flows, admin tools, Firebase database support, automated customer messaging, n8n workflow automation, and automatic Excel booking input.',
+  image: 'assets/projects/pixiecam/website.png',
+  gallery: [
+    {
+      label: 'Automated Message',
+      src: 'assets/projects/pixiecam/automated-message.png',
+    },
+    {
+      label: 'n8n Workflow',
+      src: 'assets/projects/pixiecam/n8n-workflow.png',
+    },
+    {
+      label: 'Excel Booking Input',
+      src: 'assets/projects/pixiecam/automated-excel.png',
+    },
+  ],
+  highlights: ['Database-backed bookings', 'Admin management pages', 'Firebase integration', 'n8n automation workflow', 'Automatic Excel booking logs', 'Automated customer messages'],
+};
 const projectCases = [
   {
     title: 'Calendar Management',
@@ -216,7 +239,7 @@ function ProfilePhoto() {
     <div className="profile-photo-card">
       <div className="profile-photo-frame">
         <img
-          src="assets/profile/nicole-abella.jpg"
+          src="assets/profile/nicole-abella.png"
           alt="Nicole Abella"
           onError={(event) => {
             event.currentTarget.style.display = 'none';
@@ -226,9 +249,8 @@ function ProfilePhoto() {
         <div className="profile-photo-fallback">NA</div>
       </div>
       <div>
-        <p>Profile Photo Slot</p>
-        <strong>To add your photo, save it as:</strong>
-        <span>public/assets/profile/nicole-abella.jpg</span>
+        <p>Nicole Abella</p>
+        <strong>Shopify VA | Customer Support Specialist | E-Commerce Operations & Order Fulfillment</strong>
       </div>
     </div>
   );
@@ -286,8 +308,22 @@ function DashboardMockup() {
 }
 
 function App() {
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === 'undefined') return 'light';
+    const savedTheme = window.localStorage.getItem('theme');
+    if (savedTheme) return savedTheme;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem('theme', theme);
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
+
+  const isDark = theme === 'dark';
+
   return (
-    <div className="site"> 
+    <div className="site" data-theme={theme}> 
       <header className="nav">
         <a className="brand" href="#top" aria-label="Nicole Abella home">
           <span>NA</span>
@@ -296,7 +332,24 @@ function App() {
         <nav aria-label="Primary navigation">
           {navItems.map(([label, id]) => <a key={id} href={`#${id}`}>{label}</a>)}
         </nav>
-        <a className="nav-cta" href="https://calendly.com/nicolephileas/30min" target="_blank" rel="noreferrer">Schedule a Call</a>
+        <div className="nav-actions">
+          <button
+            className="theme-toggle"
+            type="button"
+            onClick={() => setTheme(isDark ? 'light' : 'dark')}
+            aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+            title={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+          >
+            <span className="theme-toggle-track" aria-hidden="true">
+              <span className="theme-toggle-icon sun-icon"><Sun size={15} /></span>
+              <span className="theme-toggle-icon moon-icon"><Moon size={15} /></span>
+              <span className="theme-toggle-thumb">
+                {isDark ? <Moon size={15} /> : <Sun size={15} />}
+              </span>
+            </span>
+          </button>
+          <a className="nav-cta" href="https://calendly.com/nicolephileas/30min" target="_blank" rel="noreferrer">Schedule a Call</a>
+        </div>
       </header>
 
       <main id="top">
@@ -360,6 +413,29 @@ function App() {
 
         <section className="section work-section" id="work">
           <SectionHeader eyebrow="Selected Work" title="Practical examples of support, organization, and operations work." text="These samples can be edited, renamed, or replaced as you label more work examples from your project folders." />
+          <motion.article className="featured-work-card" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.5 }}>
+            <div className="featured-work-media">
+              <img src={featuredProject.image} alt={`${featuredProject.title} website preview`} loading="lazy" />
+            </div>
+            <div className="featured-work-content">
+              <p>{featuredProject.category}</p>
+              <h3>{featuredProject.title}</h3>
+              <span>{featuredProject.summary}</span>
+              <div className="featured-work-tags">
+                {featuredProject.highlights.map((highlight) => (
+                  <strong key={highlight}>{highlight}</strong>
+                ))}
+              </div>
+              <div className="featured-work-gallery">
+                {featuredProject.gallery.map((image) => (
+                  <figure key={image.src}>
+                    <img src={image.src} alt={`${featuredProject.title} ${image.label}`} loading="lazy" />
+                    <figcaption>{image.label}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          </motion.article>
           <div className="work-grid">
             {projectCases.map((project) => (
               <motion.article className="work-card" key={project.title} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.5 }}>
