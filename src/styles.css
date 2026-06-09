@@ -688,15 +688,25 @@ button, input, textarea, select { font: inherit; }
   gap: 0;
   overflow: hidden;
   margin-bottom: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--line);
   border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(49, 93, 244, 0.08), transparent 42%),
+    var(--panel);
+  color: var(--ink);
+  box-shadow: 0 24px 70px rgba(17, 24, 39, 0.08);
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+:root[data-theme="dark"] .featured-work-card,
+.site[data-theme="dark"] .featured-work-card {
+  border-color: rgba(255, 255, 255, 0.12);
   background: var(--navy);
   color: var(--white);
   box-shadow: 0 28px 80px rgba(7, 17, 32, 0.22);
 }
 .featured-work-media {
   min-height: 440px;
-  background: #101827;
+  background: color-mix(in srgb, var(--panel) 84%, var(--navy));
 }
 .featured-work-media img {
   display: block;
@@ -720,15 +730,24 @@ button, input, textarea, select { font: inherit; }
 }
 .featured-work-content h3 {
   margin: 0;
+  color: var(--heading);
   font-size: clamp(34px, 4vw, 52px);
   line-height: 1;
+}
+:root[data-theme="dark"] .featured-work-content h3,
+.site[data-theme="dark"] .featured-work-content h3 {
+  color: var(--white);
 }
 .featured-work-content > span {
   display: block;
   margin-top: 16px;
-  color: rgba(255, 255, 255, 0.74);
+  color: var(--muted);
   font-size: 17px;
   line-height: 1.65;
+}
+:root[data-theme="dark"] .featured-work-content > span,
+.site[data-theme="dark"] .featured-work-content > span {
+  color: rgba(255, 255, 255, 0.74);
 }
 .featured-work-tags {
   display: flex;
@@ -738,11 +757,17 @@ button, input, textarea, select { font: inherit; }
 }
 .featured-work-tags strong {
   padding: 8px 11px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid var(--line);
   border-radius: 999px;
+  background: color-mix(in srgb, var(--panel) 88%, var(--page));
+  color: var(--heading);
+  font-size: 13px;
+}
+:root[data-theme="dark"] .featured-work-tags strong,
+.site[data-theme="dark"] .featured-work-tags strong {
+  border-color: rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.08);
   color: rgba(255, 255, 255, 0.86);
-  font-size: 13px;
 }
 .featured-work-gallery {
   display: grid;
@@ -754,8 +779,13 @@ button, input, textarea, select { font: inherit; }
   position: relative;
   margin: 0;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--line);
   border-radius: 8px;
+  background: var(--soft);
+}
+:root[data-theme="dark"] .featured-work-gallery figure,
+.site[data-theme="dark"] .featured-work-gallery figure {
+  border-color: rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.06);
 }
 .featured-work-gallery img {
