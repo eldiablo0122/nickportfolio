@@ -125,6 +125,20 @@ const shopifyMetrics = [
   { key: 'reshipments', label: 'Reshipments', icon: Truck, suffix: '', good: 'down' },
   { key: 'csat', label: 'CSAT', icon: Star, suffix: '%', good: 'up' },
 ];
+const shopifyAdminProofs = [
+  {
+    title: 'High-volume Shopify order queue',
+    label: 'Vireva',
+    image: 'assets/projects/shopify-admin-proof/vireva-orders-redacted.png',
+    note: 'Orders, payment status, fulfillment status, item counts, shipping methods, and delivery tags visible with sensitive identifiers redacted.',
+  },
+  {
+    title: 'Fulfilled and refunded order management',
+    label: 'Celestra',
+    image: 'assets/projects/shopify-admin-proof/celestra-orders-redacted.png',
+    note: 'Customer names, order numbers, and account details are blurred while preserving proof of Shopify admin support experience.',
+  },
+];
 const featuredProject = {
   title: 'Pixie.cam',
   category: 'Featured Web Creation + Automation System',
@@ -583,6 +597,20 @@ function App() {
         <section className="section work-section" id="work">
           <SectionHeader eyebrow="Selected Work" title="Practical examples of support, organization, and operations work." text="These are the projects I've worked on over the years." />
           <ShopifyDashboard />
+          <div className="shopify-proof-grid">
+            {shopifyAdminProofs.map((proof) => (
+              <motion.article className="shopify-proof-card" key={proof.title} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.5 }}>
+                <div className="shopify-proof-image">
+                  <img src={proof.image} alt={`${proof.label} Shopify orders dashboard with sensitive details redacted`} loading="lazy" />
+                </div>
+                <div className="shopify-proof-content">
+                  <span>{proof.label}</span>
+                  <h3>{proof.title}</h3>
+                  <p>{proof.note}</p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
           <motion.article className="featured-work-card" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.5 }}>
             <div className="featured-work-media">
               <img src={featuredProject.image} alt={`${featuredProject.title} website preview`} loading="lazy" />
